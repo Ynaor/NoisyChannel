@@ -15,15 +15,15 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\Users\t-yuvalnaor\Downloads\Pa1-master\Pa1-master\Channel\Channel\channel.cpp">
+    <ClCompile Include="channel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Users\t-yuvalnaor\Downloads\Pa1-master\Pa1-master\Channel\Channel\main.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\Users\t-yuvalnaor\Downloads\Pa1-master\Pa1-master\Channel\Channel\channel.h">
+    <ClInclude Include="channel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

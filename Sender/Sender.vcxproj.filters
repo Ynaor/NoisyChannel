@@ -15,18 +15,18 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\Users\t-yuvalnaor\Downloads\Pa1-master\Pa1-master\Sender\Sender\sender.c">
+    <ClCompile Include="sender.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Users\t-yuvalnaor\Downloads\Pa1-master\Pa1-master\Sender\Sender\sender_functions.c">
+    <ClCompile Include="sender_functions.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\Users\t-yuvalnaor\Downloads\Pa1-master\Pa1-master\Sender\Sender\sender_functions.h">
+    <ClInclude Include="HardCodedData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Users\t-yuvalnaor\Downloads\Pa1-master\Pa1-master\Sender\Sender\HardCodedData.h">
+    <ClInclude Include="sender_functions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
