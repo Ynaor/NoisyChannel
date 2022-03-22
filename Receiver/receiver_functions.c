@@ -388,7 +388,7 @@ int communicate_server(char* file_name, SOCKET* p_socket) {
         recv_result = recv_packet(message, MAX_BYTES_IN_PACKET, p_socket, &packet_size);
 
         if (recv_result == TRNS_FAILED) {
-            if (!fclose(fp))
+            if (fclose(fp))
                 printf("Error: unable to close file\n");
             return 1;
         }
@@ -396,13 +396,13 @@ int communicate_server(char* file_name, SOCKET* p_socket) {
 
         get_bits(message, parsed_message, packet_size);
         if (parse_packet(fp, parsed_message, packet_size)) {
-            if (!fclose(fp))
+            if (fclose(fp))
                 printf("Error: unable to close file\n");
             return 1;
         }
         
         if (recv_result == TRNS_DISCONNECTED) {
-            if (!fclose(fp)) {
+            if (fclose(fp)) {
                 printf("Error: unable to close file\n");
                 return 1;
             }
