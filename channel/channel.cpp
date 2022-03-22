@@ -92,13 +92,13 @@ SOCKET newSocket(sockaddr_in *aClientAddr, int* aAutoPort, BOOL aIsListen)
 
 	// set socket parameters
 	aClientAddr->sin_family = AF_INET;
-	aClientAddr->sin_port = RANDOM_PORT;
-	
-	#ifndef _DEBUG
-	aClientAddr->sin_addr.s_addr = INADDR_ANY;
-	#else
+
+	#ifdef _DEBUG
+	aClientAddr->sin_port = 5555;
 	aClientAddr->sin_addr.s_addr = inet_addr("127.0.0.1");
-	std::cout <<"Local IP: " << inet_ntoa(aClientAddr->sin_addr) << "\n";
+	#else
+	aClientAddr->sin_port = RANDOM_PORT;
+	aClientAddr->sin_addr.s_addr = INADDR_ANY;
 	#endif
 	
 
@@ -132,7 +132,7 @@ SOCKET newSocket(sockaddr_in *aClientAddr, int* aAutoPort, BOOL aIsListen)
 	// set the auto selected port from operating system
 	int addrSize = sizeof(*aClientAddr);
 	getsockname(s, (SOCKADDR*)aClientAddr, &addrSize);
-	*aAutoPort = ntohs(aClientAddr->sin_port);
 
-	return s;
+
+	*aAutoPort = ntohs(aClientAddr->sin_port);
 }

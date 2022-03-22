@@ -11,6 +11,8 @@ Project description:	Sender-Receiver communication through a noisy channel
 #define WIN32_LEAN_AND_MEAN
 #endif
 
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -300,7 +302,7 @@ int boot_client(char* address, int port){
     SOCKET main_socket = INVALID_SOCKET;
     g_ip = address;
     g_port = port;
-    char f_name[MAX_FN] = { 0 };
+    char f_name[MAX_FN] = "";
 
     // Initialize Winsock
     WSADATA wsa_data;
@@ -338,8 +340,8 @@ int boot_client(char* address, int port){
 
         // Client connected succefully, get file name
         printf("enter file name:\n");
-        if (fgets(f_name, MAX_FN, stdin) == NULL) {
-            printf("Error: could not read file name\n");
+        if (scanf("%s", f_name) == NULL) {
+            printf("Error: could not create output file\n");
             return 1;
         }
         /// NEED TO HANDLE Too LONG FILE NAME *********************************************
