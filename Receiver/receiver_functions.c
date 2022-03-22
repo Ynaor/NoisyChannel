@@ -26,7 +26,7 @@ Project description:	Sender-Receiver communication through a noisy channel
 #include "receiver_functions.h"
 
 
-#ifdef HAMMING
+#ifdef _DEBUG
 static int g_port;
 static char* g_ip;
 static unsigned char write_mask = 0;
@@ -278,10 +278,10 @@ void get_bits(char* read_target, int* data_buffer, int packet_size) {
         }
     }
 }
-#endif HAMMING
+#endif _DEBUG
 
 
-#ifndef HAMMING
+#ifndef _DEBUG
 
 static int g_port;
 static char* g_ip;
@@ -344,7 +344,7 @@ int boot_client(char* address, int port){
             printf("Error: could not create output file\n");
             return 1;
         }
-        /// NEED TO HANDLE Too LONG FILE NAME *********************************************
+        /// NEED TO ANDLE Too LONG FILE NAME *********************************************
         if (strcmp(f_name, "quit") == 0) {
             return 0;
         }
@@ -572,4 +572,4 @@ TransferResult_t recv_packet(char* buffer, const int packet_length, SOCKET* p_co
 
     return TRNS_SUCCEEDED;
 }
-#endif HAMMING
+#endif _DEBUG
