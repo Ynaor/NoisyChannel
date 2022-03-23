@@ -111,5 +111,6 @@ int main(int argc, char* argv[])
 			exit(0);
 		}
 	}
+	free (messageBuffer);  // cleaning up the memory
 	return 0;
 }

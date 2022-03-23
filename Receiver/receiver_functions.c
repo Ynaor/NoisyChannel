@@ -276,7 +276,8 @@ TransferResult_t recv_packet(char* buffer, const int packet_length, SOCKET* p_co
     int bytes_transferred, bytes_left = packet_length, ret_val = 0, error = 0;
 
     // recieve bytes of data until done
-    while (bytes_left > 0) {
+    while (bytes_left > 0)
+    {
 
         bytes_transferred = recv(*p_connection_socket, p_current_place, bytes_left, 0);
         
@@ -294,6 +295,7 @@ TransferResult_t recv_packet(char* buffer, const int packet_length, SOCKET* p_co
             else
                 ret_val = TRNS_DISCONNECTED;
             
+            /*
             // close socket
             if (*p_connection_socket != INVALID_SOCKET) {
 
@@ -305,10 +307,9 @@ TransferResult_t recv_packet(char* buffer, const int packet_length, SOCKET* p_co
                 else
                     *p_connection_socket = INVALID_SOCKET;
             
-            }
-            
+            }*/
+
             return ret_val;
-        
         }
         
         (*bytes_received) += bytes_transferred;

@@ -90,9 +90,11 @@ int boot_client(char* address, int port){
             return 0;
         }
 
+        
         if (send_file(f_name, &main_socket)) {
             return 1;
         }
+       
 
         printf("file length: %u bytes\n", total_bytes_read);
         printf("sent: %u bytes\n", total_bytes_sent);
@@ -141,7 +143,7 @@ int send_file(char* file_name, SOCKET *p_socket) {
                         break;
                 }
                 bits_in_frame_buffer = bits_read + hamming_check_bits;
-                stupid_hamming(frame_data_buffer, frame_buffer);
+                add_hamming(frame_data_buffer, frame_buffer);
                 concatenate_array(packet_buffer, bits_in_packet_buffer, frame_buffer, bits_in_frame_buffer);
                 
                 bits_in_packet_buffer += bits_in_frame_buffer;
@@ -158,14 +160,15 @@ int send_file(char* file_name, SOCKET *p_socket) {
             if (bits_in_packet_buffer == 0)
                 break;
 
-
             int_to_char(packet_buffer, message, bits_in_packet_buffer / BITS_IN_BYTE);
+            
             
             if (send_packet(message, bits_in_packet_buffer / BITS_IN_BYTE, p_socket)) {
                 if (fclose(fp))
                     fprintf(stderr, "Error: failed to close file");
                 return 1;
             }
+            
 
             memset(packet_buffer, 0, sizeof(packet_buffer));
             bits_in_packet_buffer = 0;
@@ -179,6 +182,7 @@ int send_file(char* file_name, SOCKET *p_socket) {
             return 1;
         }
 
+        
         if (closesocket(*p_socket) == INVALID_SOCKET){
             int error = WSAGetLastError();
             if (error == WSAENOTSOCK || error == WSAECONNABORTED)
@@ -222,7 +226,7 @@ int read_file_bits(FILE* p_file, int *data_buffer, int *bits_read){
 /// </summary>
 /// <param name="data_buffer">Hamming block data bits</param>
 /// <param name="frame_buffer">hamming block</param>
-void stupid_hamming(int* data_buffer, int* frame_buffer) {
+void add_hamming(int* data_buffer, int* frame_buffer) {
     int q1, q2, q4, q8, q16;
 
     frame_buffer[2] = data_buffer[0];
@@ -297,11 +301,6 @@ int send_packet(char* buffer, const int message_len, SOCKET* p_connection_socket
                 fprintf(stderr, "Error: send failed because %d.\n", error_reason);
                 return 1;
             }
-
-            // if not, error and hard close is done
-            closesocket(*p_connection_socket);
-            *p_connection_socket = INVALID_SOCKET;
-            return 1;
         }
 
         total_bytes_sent += bytes_transferred;

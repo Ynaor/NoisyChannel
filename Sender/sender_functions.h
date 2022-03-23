@@ -54,7 +54,7 @@ int read_file_bits(FILE* p_file, int* data_buffer, int* bits_read);
 /// </summary>
 /// <param name="data_buffer">Hamming block data bits</param>
 /// <param name="frame_buffer">hamming block</param>
-void stupid_hamming(int* data_buffer, int* frame_buffer);
+void add_hamming(int* data_buffer, int* frame_buffer);
 
 
 /// <summary>
