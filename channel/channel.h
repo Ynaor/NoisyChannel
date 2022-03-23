@@ -1,3 +1,10 @@
+/*
+Authors:				Shachar Cohen (313416521) & Yuval Naor (312497084)
+Project:				Programming Assignment 1: Noisy Channel
+Project description:	Sender-Receiver communication through a noisy channel
+*/
+
+
 #pragma once
 
 #pragma comment(lib, "Ws2_32.lib")
@@ -22,11 +29,7 @@
 #define RANDOM_PORT         0
 #define SINGLE_BIT_MASK		1
 #define BITS_IN_BYTE        8
-#define FRAME_SIZE_BYTES	31	   // "frame" is a collection of 20 31 byte collection (8 bits * 31 bits per chuck)
-#define FRAME_SIZE_BITS     248    // 8 * 31
-#define FRAMES_PER_PACKET   20     // we wish to send 20 frames in every packet, to increase the size of our packets
-#define BUFFER_SIZE_BYTES	620    // 31 bytes per "frame", 20 frames per packet
-#define BUFFER_SIZE_BITS    4960   // 620 * 8 bits per byte
+#define BUFFER_SIZE_BYTES	100000    // 31 bytes per "frame", 20 frames per packet
 #define TWO_POWER_FIFTEEN   32768  // 2^15
 #define TWO_POWER_SIXTEEN   65536  // 2^16
 #define HOSTNAME_MAX_LEN    350
@@ -40,10 +43,10 @@
 void WinsockInit(WSADATA* wsaData);
 
 // generates random noise according to the probability argument passed by the user
-void RandomNoise(int aProbability, char* aBuffer, unsigned int aRandSeed, int *aFlippedBits);
+void RandomNoise(int aProbability, char* aBuffer, unsigned int aRandSeed, int *aFlippedBits, int abytesRecieved);
 
 // generates deterministic noise according to the cycle length argument passed by the user
-void DeterministicNoise(int aCycle, char* aBuffer, int* aFlippedBits);
+void DeterministicNoise(int aCycle, char* aBuffer, int *aFlippedBits, int abytesRecieved);
 
 // retrieves the current host ip address, will be used for input ip address for both clients (sender and reciever)
 void getHostIp(in_addr* aHostAddr);

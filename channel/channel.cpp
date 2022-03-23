@@ -1,20 +1,19 @@
+/*
+Authors:				Shachar Cohen (313416521) & Yuval Naor (312497084)
+Project:				Programming Assignment 1: Noisy Channel
+Project description:	Sender-Receiver communication through a noisy channel
+*/
 #include "channel.h"
 
-
-// ********************************************
-// **********  Socket Handling   **************
-// ********************************************
-
-
 // Will be generating random noise with given seed 
-void RandomNoise(int aProbability, char* aBuffer, unsigned int aRandSeed, int *aFlippedBits)
+void RandomNoise(int aProbability, char* aBuffer, unsigned int aRandSeed, int *aFlippedBits, int abytesRecieved)
 {
 	unsigned char mask; 
 	std::default_random_engine generator(0); 
 	std::uniform_int_distribution<int> distribution(0,TWO_POWER_SIXTEEN);
 	long int randomNumber;
 
-	for (int byte = 0; byte < BUFFER_SIZE_BYTES; byte++) 
+	for (int byte = 0; byte < abytesRecieved; byte++) 
 	{
 		mask = SINGLE_BIT_MASK;
 		for (int bit = 0; bit < BITS_IN_BYTE; bit++)
@@ -31,12 +30,13 @@ void RandomNoise(int aProbability, char* aBuffer, unsigned int aRandSeed, int *a
 	}
 }
 
-void DeterministicNoise(int aCycle, char* aBuffer, int *aFlippedBits)
+// Will flip every aCycle bit in the incoming message 
+void DeterministicNoise(int aCycle, char* aBuffer, int *aFlippedBits, int abytesRecieved)
 {
 	int counter = 0;
 	unsigned char mask;
 	
-	for (int byte = 0; byte < BUFFER_SIZE_BYTES; byte++)
+	for (int byte = 0; byte < abytesRecieved; byte++)
 	{
 		mask = SINGLE_BIT_MASK;
 		for (int bit = 0; bit < BITS_IN_BYTE; bit++)
@@ -92,13 +92,14 @@ SOCKET newSocket(sockaddr_in *aClientAddr, int* aAutoPort, BOOL aIsListen)
 
 	// set socket parameters
 	aClientAddr->sin_family = AF_INET;
-
-	#ifdef _DEBUG
-	aClientAddr->sin_port = 5555;
-	aClientAddr->sin_addr.s_addr = inet_addr("127.0.0.1");
-	#else
 	aClientAddr->sin_port = RANDOM_PORT;
+	
+	// In debug mode, testing with Localhost IP address
+	#ifndef _DEBUG
 	aClientAddr->sin_addr.s_addr = INADDR_ANY;
+	#else
+	aClientAddr->sin_addr.s_addr = inet_addr("127.0.0.1");
+	std::cout <<"Local IP: " << inet_ntoa(aClientAddr->sin_addr) << "\n";
 	#endif
 	
 
@@ -132,7 +133,7 @@ SOCKET newSocket(sockaddr_in *aClientAddr, int* aAutoPort, BOOL aIsListen)
 	// set the auto selected port from operating system
 	int addrSize = sizeof(*aClientAddr);
 	getsockname(s, (SOCKADDR*)aClientAddr, &addrSize);
-
-
 	*aAutoPort = ntohs(aClientAddr->sin_port);
+
+	return s;
 }
