@@ -19,7 +19,7 @@ Project description:	Sender-Receiver communication through a noisy channel
 
 #include "sender_functions.h"
 
-#ifndef _DEBUG
+
 /// <summary>
 /// Sender main. Inputs:
 ///		1. IP (X.X.X.X format)
@@ -45,5 +45,3 @@ int main(int argc, char* argv[])
 
 	return ret_val;
 }
-
-#endif _DEDBUG
