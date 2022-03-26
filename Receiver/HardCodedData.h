@@ -35,6 +35,7 @@ Project description:	Sender-Receiver communication through a noisy channel
 #define DATA_BITS_IN_PACKET					DATA_BYTES_IN_PACKET		* BITS_IN_BYTE		// Total number of bits in packet
 
 #define MAX_FN								10000											// Define max file name length to 300 (includin extentions)
+#define BUFFER_SIZE_BYTES					1000000
 
 
 typedef enum { TRNS_FAILED, TRNS_DISCONNECTED, TRNS_SUCCEEDED } TransferResult_t;

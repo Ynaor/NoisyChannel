@@ -40,13 +40,7 @@ int boot_client(char* address, int port);
 int send_file(char* file_name, SOCKET* p_socket);
 
 
-/// <summary>
-/// Read file to create Hamming interval data
-/// </summary>
-/// <param name="p_file">file pointer</param>
-/// <param name="buffer">data buffer in which to save the read bits</param>
-/// <returns>zero if MAX_DATA_BITS were read, one if reached end of file</returns>
-int read_file_bits(FILE* p_file, int* data_buffer, int* bits_read);
+void write_frame_to_packet(FILE* fp, char* frame_buffer, char* packet);
 
 
 /// <summary>
@@ -54,7 +48,17 @@ int read_file_bits(FILE* p_file, int* data_buffer, int* bits_read);
 /// </summary>
 /// <param name="data_buffer">Hamming block data bits</param>
 /// <param name="frame_buffer">hamming block</param>
-void add_hamming(int* data_buffer, int* frame_buffer);
+void add_hamming(char* data_buffer, char* frame_buffer);
+
+
+/// <summary>
+/// Converts an array of binary chars ints to chars by calculating the decimal value of every 8 consecutive elements in array
+/// </summary>
+/// <param name="source">source int array</param>
+/// <param name="dest">destination char array</param>
+/// <param name="num_of_bytes">size of char array</param>
+/// <returns>send result</returns>
+void bin_to_dec(char* source, char* dest, int num_of_bytes);
 
 
 /// <summary>
@@ -65,24 +69,3 @@ void add_hamming(int* data_buffer, int* frame_buffer);
 /// <param name="p_connection_socket">pointer to the socket</param>
 /// <returns>send result</returns>
 int send_packet(char* buffer, const int message_len, SOCKET* p_connection_socket);
-
-
-/// <summary>
-/// Merge two arrays from a given position in the first array
-/// </summary>
-/// <param name="basa_array">The array to have another array added to</param>
-/// <param name="last_index">The index in the base_array that the second_array will be added to</param>
-/// <param name="seconed_array">The array that is added</param>
-/// <param name="size">The number of elements of second_array to be added to base_array</param>
-void concatenate_array(int* basa_array, int last_index, int* seconed_array, int size);
-
-
-/// <summary>
-/// Converts an array of ints to chars by calculating the decimal value of every 8 consecutive bits
-/// </summary>
-/// <param name="source">source int array</param>
-/// <param name="dest">destination char array</param>
-/// <param name="num_of_bytes">size of char array</param>
-/// <returns>send result</returns>
-void int_to_char(int* source, char* dest, int num_of_bytes);
-
